@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 
+/*-----------Query Builder Methods-----------*/
 class StudentsController extends BaseController
 {
     private $db;
@@ -18,9 +19,9 @@ class StudentsController extends BaseController
     public function insertStudent()
     {
         $data = [
-            "name" => "marivic villareal",
-            "email" => "marivicvillareal@gmail.com",
-            "phone" => "09501658928"
+            "name" => "jhobert erato",
+            "email" => "jhoberterato@gmail.com",
+            "phone" => "09390808842"
         ];
 
         if($this->table->insert($data)){
@@ -45,5 +46,37 @@ class StudentsController extends BaseController
         else{
             echo "Student update failed!";
         }
+    }
+
+    public function deleteStudent()
+    {
+
+        if($this->table->delete([
+            "id" => 1
+        ])){
+            echo "Student deleted successfully!";
+        }
+        else{
+            echo "Student deletion failed!";
+        }
+    }
+
+    public function selectStudent()
+    {
+        /*-----------Returns All by Array-----------*/
+        // $students = $this->table->get()->getResult();
+
+        /*-----------Returns with WHERE by Array-----------*/
+        // $students = $this->table->where([
+        //     "id" => 2
+        // ])->get()->getResult();
+
+        /*-----------Returns with WHERE by Single Row-----------*/
+        $students = $this->table->where([
+            "id" => 2
+        ])->get()->getRowArray();
+        
+        echo "<pre>";
+        print_r($students);
     }
 }
