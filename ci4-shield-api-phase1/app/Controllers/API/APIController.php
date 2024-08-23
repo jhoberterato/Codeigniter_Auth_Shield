@@ -225,6 +225,34 @@ class APIController extends ResourceController
 
     //DELETE
     public function deleteStudent($student_id){
-        
+        $studentObject = new StudentModel();
+
+        $student = $studentObject->find($student_id);
+
+        if(!empty($student)){
+            if($studentObject->delete($student_id)){
+                $response = [
+                    "status" => false,
+                    "message" => "Student deleted successfully",
+                    "data" => [],
+                ];
+            }
+            else{
+                $response = [
+                    "status" => false,
+                    "message" => "Failed to delete student",
+                    "data" => [],
+                ];
+            }
+        }
+        else{
+            $response = [
+                "status" => false,
+                "message" => "No student found",
+                "data" => [],
+            ];
+        }
+
+        return $this->respondCreated($response);
     }
 }
