@@ -13,10 +13,12 @@ service('auth')->routes($routes);
 $routes->group("api", ["namespace" => "App\Controllers\API"], function($routes){
     $routes->post("register", "AuthController::register");
     $routes->post("login", "AuthController::login");
-    $routes->get("profile", "AuthController::profile");
-    $routes->get("logout", "AuthController::logout");
+    $routes->get("profile", "AuthController::profile", ["filter" => "apiauth"]);
+    $routes->get("logout", "AuthController::logout", ["filter" => "apiauth"]);
 
-    $routes->post("addProject", "ProjectController::addProject");
-    $routes->get("listProjects", "ProjectController::listProjects");
-    $routes->delete("deleteProject/(:num)", "ProjectController::deleteProject/$1");
+    $routes->post("addProject", "ProjectController::addProject", ["filter" => "apiauth"]);
+    $routes->get("listProjects", "ProjectController::listProjects", ["filter" => "apiauth"]);
+    $routes->delete("deleteProject/(:num)", "ProjectController::deleteProject/$1", ["filter" => "apiauth"]);
+
+    $routes->get("invalid-access", "AuthController::accessDenied");
 });
